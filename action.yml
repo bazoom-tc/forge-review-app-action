@@ -11,6 +11,9 @@ inputs:
   forge_server_id:
     description: 'Laravel Forge server ID'
     required: true
+  forge_org_id:
+    description: 'Laravel Forge organization ID'
+    required: true
   root_domain:
     description: 'Root domain under which to create review-app site'
     required: false
