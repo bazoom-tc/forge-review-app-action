@@ -866,7 +866,7 @@ echo ""
 echo "* Check last deployment"
 
 LAST_DEPLOYMENT_DATA=$(cat last-deployment.json)
-LAST_DEPLOYMENT_STATUS=$(echo "$LAST_DEPLOYMENT_DATA" | jq -r '.status')
+LAST_DEPLOYMENT_STATUS=$(echo "$LAST_DEPLOYMENT_DATA" | jq -r '.attributes.status')
 LAST_DEPLOYMENT_ID=$(echo "$LAST_DEPLOYMENT_DATA" | jq -r '.id')
 LAST_DEPLOYMENT_OUTPUT_DATA=$(cat last-deployment-output.json)
 LAST_DEPLOYMENT_OUTPUT=$(echo "$LAST_DEPLOYMENT_OUTPUT_DATA" | jq -r '.data.attributes.output')
