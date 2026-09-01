@@ -247,7 +247,7 @@ if [[ $DEBUG == 'true' ]]; then
 fi
 
 # Check if review-app site exists
-SITE_DATA=$(jq -r '.sites[] | select(.name == "'"$INPUT_HOST"'") // empty' sites.json)
+SITE_DATA=$(jq -r '.data[] | select(.name == "'"$INPUT_HOST"'") // empty' sites.json)
 if [[ ! -z "$SITE_DATA" ]]; then
 	echo "$SITE_DATA" >site.json
 	SITE_ID=$(jq -r '.id' site.json)
@@ -445,7 +445,7 @@ if [[ $INPUT_LETSENCRYPT_CERTIFICATE == 'true' ]]; then
 
 	if [[ $HTTP_STATUS -eq 200 ]]; then
 		echo "Fetched site certificates successfully"
-		if jq -e '.certificates | length > 0' response.json >/dev/null; then
+		if jq -e '.data | length > 0' response.json >/dev/null; then
 			echo "Site has at least one certificate"
 			CERTIFICATE_FOUND='true'
 		else
@@ -771,7 +771,7 @@ while [[ "$status" != "null" && "$elapsed_time" -lt $INPUT_DEPLOYMENT_TIMEOUT ]]
 		exit 1
 	fi
 
-	status=$(echo "$JSON_RESPONSE" | jq -r '.site."deployment_status"')
+	status=$(echo "$JSON_RESPONSE" | jq -r '.attributes.deployment_status')
 
 	if [[ "$status" != "null" ]]; then
 		echo "Status is not null ($status), retrying in 5 seconds..."
@@ -814,7 +814,7 @@ fi
 
 if [[ $HTTP_STATUS -eq 200 ]]; then
 	echo "Fetched last deployment successfully "
-	echo "$(jq -r '.deployments[0]' response.json)" >last-deployment.json
+	echo "$(jq -r '.data[0]' response.json)" >last-deployment.json
 else
 	echo "Failed to launch deployment. HTTP status code: $HTTP_STATUS"
 	echo "JSON Response:"
@@ -869,7 +869,7 @@ LAST_DEPLOYMENT_DATA=$(cat last-deployment.json)
 LAST_DEPLOYMENT_STATUS=$(echo "$LAST_DEPLOYMENT_DATA" | jq -r '.status')
 LAST_DEPLOYMENT_ID=$(echo "$LAST_DEPLOYMENT_DATA" | jq '.id')
 LAST_DEPLOYMENT_OUTPUT_DATA=$(cat last-deployment-output.json)
-LAST_DEPLOYMENT_OUTPUT=$(echo "$LAST_DEPLOYMENT_OUTPUT_DATA" | jq -r '.output')
+LAST_DEPLOYMENT_OUTPUT=$(echo "$LAST_DEPLOYMENT_OUTPUT_DATA" | jq -r '.data.attributes.output')
 
 if [[ $LAST_DEPLOYMENT_STATUS == 'finished' ]]; then
 	echo "Deployment finished successfully"
