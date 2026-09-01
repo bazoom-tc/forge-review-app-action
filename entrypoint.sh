@@ -359,7 +359,7 @@ fi
 if [[ $INPUT_CONFIGURE_REPOSITORY == 'true' ]]; then
 	echo ""
 	echo "* Check if repository is configured"
-	SITE_REPOSITORY=$(jq -r '.repository' site.json)
+	SITE_REPOSITORY=$(jq -r '.attributes.repository' site.json)
 
 	if [[ $SITE_REPOSITORY == 'null' ]]; then
 		echo "Repository not configured on Forge site"
