@@ -723,7 +723,7 @@ if [[ $DEBUG == 'true' ]]; then
 	echo ""
 fi
 
-if [[ $HTTP_STATUS -eq 200 ]]; then
+if [[ $HTTP_STATUS -eq 202 ]]; then
 	echo "Deployment launched successfully"
 else
 	echo "Failed to launch deployment. HTTP status code: $HTTP_STATUS"
