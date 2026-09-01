@@ -698,7 +698,7 @@ fi
 echo ""
 echo "* Launch deployment"
 
-API_URL="https://forge.laravel.com/api/orgs/$INPUT_FORGE_ORG_ID/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/deployments"
+API_URL="https://forge.laravel.com/api/orgs/$INPUT_FORGE_ORG_ID/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/deployments?sort=-created_at"
 
 HTTP_STATUS=$(
 	curl -s -o response.json -w "%{http_code}" \
@@ -790,7 +790,7 @@ fi
 echo ""
 echo "* Get last deployment"
 
-API_URL="https://forge.laravel.com/api/orgs/$INPUT_FORGE_ORG_ID/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/deployments"
+API_URL="https://forge.laravel.com/api/orgs/$INPUT_FORGE_ORG_ID/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/deployments?sort=-created_at"
 
 if [[ $DEBUG == 'true' ]]; then
 	echo "[DEBUG] CURL GET on $API_URL"
