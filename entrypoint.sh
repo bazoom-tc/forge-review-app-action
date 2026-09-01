@@ -247,7 +247,7 @@ if [[ $DEBUG == 'true' ]]; then
 fi
 
 # Check if review-app site exists
-SITE_DATA=$(jq -r '.data[] | select(.name == "'"$INPUT_HOST"'") // empty' sites.json)
+SITE_DATA=$(jq -r '.data[] | select(.attributes.name == "'"$INPUT_HOST"'") // empty' sites.json)
 if [[ ! -z "$SITE_DATA" ]]; then
 	echo "$SITE_DATA" >site.json
 	SITE_ID=$(jq -r '.id' site.json)
