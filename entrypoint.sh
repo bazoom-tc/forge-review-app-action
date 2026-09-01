@@ -771,7 +771,7 @@ while [[ "$status" != "null" && "$elapsed_time" -lt $INPUT_DEPLOYMENT_TIMEOUT ]]
 		exit 1
 	fi
 
-	status=$(echo "$JSON_RESPONSE" | jq -r '.attributes.deployment_status')
+	status=$(echo "$JSON_RESPONSE" | jq -r '.data.attributes.deployment_status')
 
 	if [[ "$status" != "null" ]]; then
 		echo "Status is not null ($status), retrying in 5 seconds..."
