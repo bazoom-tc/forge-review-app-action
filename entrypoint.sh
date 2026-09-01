@@ -226,7 +226,7 @@ fi
 
 echo ""
 echo '* Get Forge server sites'
-API_URL="https://forge.laravel.com/api/v1/servers/$INPUT_FORGE_SERVER_ID/sites"
+API_URL="https://forge.laravel.com/api/orgs/$INPUT_FORGE_ORG_ID/servers/$INPUT_FORGE_SERVER_ID/sites"
 
 if [[ $DEBUG == 'true' ]]; then
 	echo "[DEBUG] CURL GET on $API_URL"
@@ -421,7 +421,7 @@ if [[ $INPUT_LETSENCRYPT_CERTIFICATE == 'true' ]]; then
 	echo ""
 	echo "* Check if site has a certificate"
 
-	API_URL="https://forge.laravel.com/api/v1/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/certificates"
+	API_URL="https://forge.laravel.com/api/orgs/$INPUT_FORGE_ORG_ID/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/certificates"
 
 	if [[ $DEBUG == 'true' ]]; then
 		echo "[DEBUG] CURL GET on $API_URL"
@@ -698,7 +698,7 @@ fi
 echo ""
 echo "* Launch deployment"
 
-API_URL="https://forge.laravel.com/api/v1/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/deployment/deploy"
+API_URL="https://forge.laravel.com/api/orgs/$INPUT_FORGE_ORG_ID/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/deployments"
 
 HTTP_STATUS=$(
 	curl -s -o response.json -w "%{http_code}" \
@@ -735,7 +735,7 @@ fi
 echo ""
 echo "* Wait for deployment"
 
-API_URL="https://forge.laravel.com/api/v1/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID"
+API_URL="https://forge.laravel.com/api/orgs/$INPUT_FORGE_ORG_ID/sites/$SITE_ID"
 
 start_time=$(date +%s)
 elapsed_time=0
@@ -790,7 +790,7 @@ fi
 echo ""
 echo "* Get last deployment"
 
-API_URL="https://forge.laravel.com/api/v1/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/deployment-history"
+API_URL="https://forge.laravel.com/api/orgs/$INPUT_FORGE_ORG_ID/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/deployments"
 
 if [[ $DEBUG == 'true' ]]; then
 	echo "[DEBUG] CURL GET on $API_URL"
@@ -828,7 +828,7 @@ echo "* Get last deployment output"
 LAST_DEPLOYMENT_DATA=$(cat last-deployment.json)
 LAST_DEPLOYMENT_ID=$(echo "$LAST_DEPLOYMENT_DATA" | jq '.id')
 
-API_URL="https://forge.laravel.com/api/v1/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/deployment-history/$LAST_DEPLOYMENT_ID/output"
+API_URL="https://forge.laravel.com/api/orgs/$INPUT_FORGE_ORG_ID/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/deployments/$LAST_DEPLOYMENT_ID/log"
 
 if [[ $DEBUG == 'true' ]]; then
 	echo "[DEBUG] CURL GET on $API_URL"
