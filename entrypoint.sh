@@ -826,7 +826,7 @@ echo ""
 echo "* Get last deployment output"
 
 LAST_DEPLOYMENT_DATA=$(cat last-deployment.json)
-LAST_DEPLOYMENT_ID=$(echo "$LAST_DEPLOYMENT_DATA" | jq '.id')
+LAST_DEPLOYMENT_ID=$(echo "$LAST_DEPLOYMENT_DATA" | jq -r '.id')
 
 API_URL="https://forge.laravel.com/api/orgs/$INPUT_FORGE_ORG_ID/servers/$INPUT_FORGE_SERVER_ID/sites/$SITE_ID/deployments/$LAST_DEPLOYMENT_ID/log"
 
@@ -856,7 +856,7 @@ if [[ $HTTP_STATUS -eq 200 ]]; then
 	echo "Fetched last deployment output successfully "
 	echo "$JSON_RESPONSE" >last-deployment-output.json
 else
-	echo "Failed to launch deployment. HTTP status code: $HTTP_STATUS"
+	echo "Failed to fetch last deployment. HTTP status code: $HTTP_STATUS"
 	echo "JSON Response:"
 	echo "$JSON_RESPONSE"
 	exit 1
@@ -867,7 +867,7 @@ echo "* Check last deployment"
 
 LAST_DEPLOYMENT_DATA=$(cat last-deployment.json)
 LAST_DEPLOYMENT_STATUS=$(echo "$LAST_DEPLOYMENT_DATA" | jq -r '.status')
-LAST_DEPLOYMENT_ID=$(echo "$LAST_DEPLOYMENT_DATA" | jq '.id')
+LAST_DEPLOYMENT_ID=$(echo "$LAST_DEPLOYMENT_DATA" | jq -r '.id')
 LAST_DEPLOYMENT_OUTPUT_DATA=$(cat last-deployment-output.json)
 LAST_DEPLOYMENT_OUTPUT=$(echo "$LAST_DEPLOYMENT_OUTPUT_DATA" | jq -r '.data.attributes.output')
 
